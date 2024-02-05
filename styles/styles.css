@@ -1,0 +1,34 @@
+body {
+    font-family: Kanit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: pink;
+}
+
+.container {
+    width: 300px;
+    text-align: center;
+    background-color: rgb(231, 98, 120);
+    border-radius: 10px;
+}
+
+button {
+    background-color: rgb(247, 181, 247);
+    border-color: white;
+    font-family: Kanit;
+}
+
+#taskList {
+    list-style: none;
+    padding: 10px 10px 10px 10px;
+}
+
+#taskList li {
+    background-color: #fff;
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
