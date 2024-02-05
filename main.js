@@ -4,19 +4,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function addTask() {
     const taskInput = document.getElementById("newTask");
-    const labelInput = document.getElementById("taskLabel");
+    const labelSelect = document.getElementById("taskLabel");
     const tasks = getTasks();
 
     if (taskInput.value.trim() === "") {
         return; // I abandon the function if its empty
     }
 
-    tasks.push({ content: taskInput.value.trim(), label: labelInput.value, done: false });// if it isnt empty it is added to the list
+    tasks.push({ content: taskInput.value, done: false, label: labelSelect.value });// if it isnt empty it is added to the list
     saveTasks(tasks);
     renderTasks(tasks);
 
     taskInput.value = ""; //clean slate
-    labelInput.value = "";
 }
 
 function getTasks() {
@@ -33,12 +32,17 @@ function renderTasks(tasks) {
     listElement.innerHTML = '';
     tasks.forEach((task, index) => {
         const taskElement = document.createElement("li");
-        const taskContent = document.createTextNode(task.content + (task.label ? ` [${task.label}]` : ""));
-        taskElement.appendChild(taskContent);
+        taskElement.textContent = task.content;
+
+        if (task.label) {
+            taskElement.classList.add(task.label);
+        }
+
         taskElement.onclick = () => toggleTaskDone(index);
         if (task.done) {
             taskElement.style.textDecoration = "line-through";
         }
+
         listElement.appendChild(taskElement);
     });
 }

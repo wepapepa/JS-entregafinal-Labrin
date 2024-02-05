@@ -13,11 +13,12 @@
 <body>
     <div class="container">
         <input type="text" id="newTask" placeholder="Añadir nueva tarea">
-        <select name="etiqueta" id="taskLabel" placeholder="Selecciona la etiqueta">
+        <select id="taskLabel">
+            <option value="">Selecciona una etiqueta</option>
             <option value="alto">Urgente</option>
             <option value="medio">Importante</option>
-            <option value="bajo">Baja importancia</option>
-        </select>
+            <option value="bajo">Baja urgencia</option>
+          </select>
 
         <button onclick="addTask()">Añadir</button>
         <ul id="taskList"></ul>
