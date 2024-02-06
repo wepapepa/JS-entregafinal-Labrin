@@ -1,10 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
     loadTasks();
-});
+}); //DOM
 
-function addTask() {
-    const taskInput = document.getElementById("newTask");
-    const labelSelect = document.getElementById("taskLabel");
+function addTask() { //funcion
+    const taskInput = document.getElementById("newTask");//DOM
+    const labelSelect = document.getElementById("taskLabel");//DOM
     const tasks = getTasks();
 
     if (taskInput.value.trim() === "") {
