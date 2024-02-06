@@ -23,20 +23,30 @@ function getTasks() {
     return storedTasks ? JSON.parse(storedTasks) : [];
 }
 
+function getLabel() {
+    const storedLabel = sessionStorage.getItem("taskLabel");
+    return storedLabel ? JSON.parse(storedLabel) : [];
+}
+
 function saveTasks(tasks) {
     sessionStorage.setItem("tasks", JSON.stringify(tasks));
+    sessionStorage.setItem("taskLabel", JSON.stringify(taskLabel));
 }
 
 function renderTasks(tasks) {
     const listElement = document.getElementById("taskList");
+    const taskLabelElement = document.getElementById("taskLabelList");
     listElement.innerHTML = '';
+    taskLabelElement.innerHTML = '';
+
     tasks.forEach((task, index) => {
         const taskElement = document.createElement("li");
         taskElement.textContent = task.content;
 
-        if (task.label) {
-            taskElement.classList.add(task.label);
-        }
+
+        // if (task.label) {
+        //     taskLabelElement.classList.add(task.label);
+        // }
 
         taskElement.onclick = () => toggleTaskDone(index);
         if (task.done) {
@@ -45,7 +55,19 @@ function renderTasks(tasks) {
 
         listElement.appendChild(taskElement);
     });
+
+    tasks.forEach((label, index) => {
+
+        const pepito = document.createElement("li");
+        pepito.textContent = taskLabelElement.content;
+
+
+        listElement.appendChild(pepito);
+    });
+
 }
+
+
 
 function toggleTaskDone(index) {
     const tasks = getTasks();
