@@ -4,27 +4,42 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: pink;
+    background: rgb(238,174,202);
+    background: radial-gradient(circle, #eeaeca 0%, #94bbe9 100%);
+}
+
+.container-add {
+    width: 80vw;
+    background-color: #037171;
+    border-radius: 10px;
+    padding: 8px;  
+
+}
+
+button {
+    background-color: rgb(247, 181, 247);
+    width: 10vw;
+    border: solid 2% white;
+    font-family: Kanit;
+    margin: 10px;
 }
 
 .container {
     width: 50vw;
     height: auto;
     text-align: center;
-    background-color: rgb(255, 139, 159);
+    background-color: #4B3F72;
     border-radius: 10px;
     margin: 20px;
+    padding: 8px;
+    color: white;   
 }
 
-button {
-    background-color: rgb(247, 181, 247);
-    border-color: white;
-    font-family: Kanit;
-}
 
 #taskList {
     list-style-type: none;
     padding: 10px 10px 10px 10px;
+    text-align: left;
 }
 
 #taskList li {
@@ -40,16 +55,19 @@ button {
 }
 
 #altoList {
-    background-color: blueviolet;
-    border-radius: 10px;
+    background-color: #06EFEF;
+    border-radius: 8px;
+    color: #1F2041;
 }
 
 #medioList {
-    background-color: green;
+    background-color: #E788B3;
     border-radius: 10px;
+    color: #1F2041;
 }
 
 #bajoList {
-    background-color: yellow;
+    background-color: #bbf1bf;
     border-radius: 10px;
+    color: #1F2041;
 }
