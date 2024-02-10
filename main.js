@@ -1,3 +1,5 @@
+
+
 document.addEventListener("DOMContentLoaded", () => {
     loadTasksAndLabels();
 });
@@ -10,7 +12,7 @@ function addTask() {
 
 
     if (taskInput.value.trim() === "") {
-        alert("¡Debes ingresar una tarea!")
+        Swal.fire("¡Debes ingresar una tarea!");
         return; // Abandonar la función si está vacío
     }
 
@@ -46,6 +48,11 @@ function renderTasks(tasks, label) {
         taskElement.onclick = () => toggleTaskDone(task);
         if (task.done) {
             taskElement.style.textDecoration = "line-through";
+            Swal.fire({
+                title: "¡Excelente trabajo!",
+                text: "Yay por ti, estás un paso más cerca de tus metas :D",
+                icon: "success"
+              });
         }
         container.appendChild(taskElement);
     });
