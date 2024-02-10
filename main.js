@@ -57,12 +57,13 @@ function renderTasks(tasks) {
             listElement.appendChild(taskElement);
         });
         container.appendChild(listElement);
-    })
+    });
+}
 
 
 function toggleTaskDone(index) {
     const tasks = getTasks();
-    tasks[laneñ][index].done = !tasks[label][index].done;
+    tasks[label][index].done = !tasks[label][index].done;
     saveTasks(tasks);
     renderTasks();
 }
