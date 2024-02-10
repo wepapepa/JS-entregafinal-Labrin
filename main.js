@@ -1,11 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
-    loadTasks();
+    loadTasksAndLabels();
 });
 
 function addTask() {
     const taskInput = document.getElementById("newTask");
     const labelSelect = document.getElementById("taskLabel");
     const tasks = getTasks();
+    const labels = getLabels();
 
 
     if (taskInput.value.trim() === "") {
@@ -13,16 +14,10 @@ function addTask() {
         return; // Abandonar la función si está vacío
     }
 
-    if (!tasks[labelSelect.value]) {
-        tasks[labelSelect.value] = []; // Crear un nuevo array si la etiqueta no existe
-    }
-
-
-    tasks[labelSelect.value].push({ content: taskInput.value, done: false });
-
+    tasks.push({ content: taskInput.value, done: false, label: labelSelect.value });
 
     saveTasks(tasks);
-    renderTasks();
+    renderTasksByLabel(labelSelect.value);
 
     taskInput.value = ""; // Limpiar el campo de entrada
 }
@@ -36,38 +31,43 @@ function saveTasks(tasks) {
     sessionStorage.setItem("tasks", JSON.stringify(tasks));
 }
 
-function renderTasks(tasks) {
-    const tasks = getTasks();
-    const container = document.getElementById("tasksContainer");
-    container.innerHTML = ''; //clean container
+function renderTasksByLabel(label) {
+    const tasks = getTasks().filter(task => task.label === label);
+    renderTasks(tasks, label);
+}
 
-    Object.keys(tasks).forEach(label =>{
-        const labelElement = document.createElement("h3");
-        labelElement.textContent = label || "Sin label";
-        container.appendChild(labelElement);
+function renderTasks(tasks, label) {
+    const container = document.getElementById(label + "List");
+    container.innerHTML = '';
 
-        const listElement = document.createElement("ul");
-        tasks[label].forEach((tasks, index) => {
-            const taskElement = document.createElement("li");
-            taskElement.textContent = task.content;
-            taskElement.onclick = () => toggleTaskDone(label, index);
-            if (task.done) {
-                taskElement.style.textDecoration = "line-through";
-            }
-            listElement.appendChild(taskElement);
-        });
-        container.appendChild(listElement);
+    tasks.forEach(task => {
+        const taskElement = document.createElement("li");
+        taskElement.textContent = task.content;
+        taskElement.onclick = () => toggleTaskDone(task);
+        if (task.done) {
+            taskElement.style.textDecoration = "line-through";
+        }
+        container.appendChild(taskElement);
     });
 }
 
-
-function toggleTaskDone(index) {
+function toggleTaskDone(clickedTaskContent) {
     const tasks = getTasks();
-    tasks[label][index].done = !tasks[label][index].done;
-    saveTasks(tasks);
-    renderTasks();
+    const taskIndex = tasks.findIndex(task => task.content === clickedTaskContent);
+    if (taskIndex !== -1) {
+        tasks[taskIndex].done = !tasks[taskIndex].done;
+        saveTasks(tasks);
+        loadTasksAndLabels(); // Recargar todas las tareas para reflejar el cambio
+    }
 }
 
-function loadTasks() {
-    renderTasks();
+function loadTasksAndLabels() {
+    const tasks = getTasks();
+    tasks.forEach(task => renderTasksByLabel(task.label));
+}
+
+function getLabels() {
+    const storedTasks = sessionStorage.getItem("tasks");
+    const tasks = storedTasks ? JSON.parse(storedTasks) : [];
+    return tasks.map(task => task.label).filter((label, index, self) => self.indexOf(label) === index);
 }

@@ -33,14 +33,6 @@ button {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.alto {
-    background-color: rgb(206, 29, 70);
-}
-
-.medio {
-    background-color: rgb(255, 156, 116);
-}
-
-.bajo {
-    background-color: rgb(155, 238, 134);
+.done {
+    text-decoration: line-through;
 }
