@@ -1,21 +1,26 @@
 document.addEventListener("DOMContentLoaded", () => {
-    loadTasks();
-}); //DOM
+    loadTasksAndLabels();
+});
 
-function addTask() { //funcion
-    const taskInput = document.getElementById("newTask");//DOM
-    const labelSelect = document.getElementById("taskLabel");//DOM
+function addTask() {
+    const taskInput = document.getElementById("newTask");
+    const labelSelect = document.getElementById("taskLabel");
     const tasks = getTasks();
+    const labels = getLabels(); // Cambiado para mejorar la consistencia en los nombres
 
     if (taskInput.value.trim() === "") {
-        return; // I abandon the function if its empty
+        return; // Abandonar la función si está vacío
     }
 
-    tasks.push({ content: taskInput.value, done: false, label: labelSelect.value });// if it isnt empty it is added to the list
-    saveTasks(tasks);
-    renderTasks(tasks);
+    tasks.push({ content: taskInput.value, done: false });
+    labels.push({ label: labelSelect.value }); // Agregar la etiqueta a la lista de etiquetas
 
-    taskInput.value = ""; //clean slate
+    saveTasks(tasks);
+    saveLabels(labels); // Guardar las etiquetas separadamente
+    renderTasks(tasks);
+    renderLabels(labels);
+
+    taskInput.value = ""; // Limpiar el campo de entrada
 }
 
 function getTasks() {
@@ -23,51 +28,44 @@ function getTasks() {
     return storedTasks ? JSON.parse(storedTasks) : [];
 }
 
-function getLabel() {
-    const storedLabel = sessionStorage.getItem("taskLabel");
-    return storedLabel ? JSON.parse(storedLabel) : [];
+function getLabels() {
+    const storedLabels = sessionStorage.getItem("labels");
+    return storedLabels ? JSON.parse(storedLabels) : [];
 }
 
 function saveTasks(tasks) {
     sessionStorage.setItem("tasks", JSON.stringify(tasks));
-    sessionStorage.setItem("taskLabel", JSON.stringify(taskLabel));
+}
+
+function saveLabels(labels) {
+    sessionStorage.setItem("labels", JSON.stringify(labels));
 }
 
 function renderTasks(tasks) {
     const listElement = document.getElementById("taskList");
-    const taskLabelElement = document.getElementById("taskLabelList");
     listElement.innerHTML = '';
-    taskLabelElement.innerHTML = '';
 
     tasks.forEach((task, index) => {
         const taskElement = document.createElement("li");
         taskElement.textContent = task.content;
-
-
-        // if (task.label) {
-        //     taskLabelElement.classList.add(task.label);
-        // }
-
         taskElement.onclick = () => toggleTaskDone(index);
         if (task.done) {
             taskElement.style.textDecoration = "line-through";
         }
-
         listElement.appendChild(taskElement);
     });
-
-    tasks.forEach((label, index) => {
-
-        const pepito = document.createElement("li");
-        pepito.textContent = taskLabelElement.content;
-
-
-        listElement.appendChild(pepito);
-    });
-
 }
 
+function renderLabels(labels) {
+    const labelListElement = document.getElementById("taskLabelList");
+    labelListElement.innerHTML = '';
 
+    labels.forEach(label => {
+        const labelElement = document.createElement("li");
+        labelElement.textContent = label.label;
+        labelListElement.appendChild(labelElement);
+    });
+}
 
 function toggleTaskDone(index) {
     const tasks = getTasks();
@@ -76,7 +74,9 @@ function toggleTaskDone(index) {
     renderTasks(tasks);
 }
 
-function loadTasks() {
+function loadTasksAndLabels() {
     const tasks = getTasks();
+    const labels = getLabels();
     renderTasks(tasks);
+    renderLabels(labels);
 }
