@@ -1,24 +1,28 @@
 document.addEventListener("DOMContentLoaded", () => {
-    loadTasksAndLabels();
+    loadTasks();
 });
 
 function addTask() {
     const taskInput = document.getElementById("newTask");
     const labelSelect = document.getElementById("taskLabel");
     const tasks = getTasks();
-    const labels = getLabels(); // Cambiado para mejorar la consistencia en los nombres
+
 
     if (taskInput.value.trim() === "") {
+        alert("¡Debes ingresar una tarea!")
         return; // Abandonar la función si está vacío
     }
 
-    tasks.push({ content: taskInput.value, done: false });
-    labels.push({ label: labelSelect.value }); // Agregar la etiqueta a la lista de etiquetas
+    if (!tasks[labelSelect.value]) {
+        tasks[labelSelect.value] = []; // Crear un nuevo array si la etiqueta no existe
+    }
+
+
+    tasks[labelSelect.value].push({ content: taskInput.value, done: false });
+
 
     saveTasks(tasks);
-    saveLabels(labels); // Guardar las etiquetas separadamente
-    renderTasks(tasks);
-    renderLabels(labels);
+    renderTasks();
 
     taskInput.value = ""; // Limpiar el campo de entrada
 }
