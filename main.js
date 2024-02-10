@@ -32,17 +32,8 @@ function getTasks() {
     return storedTasks ? JSON.parse(storedTasks) : [];
 }
 
-function getLabels() {
-    const storedLabels = sessionStorage.getItem("labels");
-    return storedLabels ? JSON.parse(storedLabels) : [];
-}
-
 function saveTasks(tasks) {
     sessionStorage.setItem("tasks", JSON.stringify(tasks));
-}
-
-function saveLabels(labels) {
-    sessionStorage.setItem("labels", JSON.stringify(labels));
 }
 
 function renderTasks(tasks) {
