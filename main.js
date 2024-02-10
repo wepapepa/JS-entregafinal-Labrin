@@ -37,41 +37,36 @@ function saveTasks(tasks) {
 }
 
 function renderTasks(tasks) {
-    const listElement = document.getElementById("taskList");
-    listElement.innerHTML = '';
+    const tasks = getTasks();
+    const container = document.getElementById("tasksContainer");
+    container.innerHTML = ''; //clean container
 
-    tasks.forEach((task, index) => {
-        const taskElement = document.createElement("li");
-        taskElement.textContent = task.content;
-        taskElement.onclick = () => toggleTaskDone(index);
-        if (task.done) {
-            taskElement.style.textDecoration = "line-through";
-        }
-        listElement.appendChild(taskElement);
-    });
-}
+    Object.keys(tasks).forEach(label =>{
+        const labelElement = document.createElement("h3");
+        labelElement.textContent = label || "Sin label";
+        container.appendChild(labelElement);
 
-function renderLabels(labels) {
-    const labelListElement = document.getElementById("taskLabelList");
-    labelListElement.innerHTML = '';
+        const listElement = document.createElement("ul");
+        tasks[label].forEach((tasks, index) => {
+            const taskElement = document.createElement("li");
+            taskElement.textContent = task.content;
+            taskElement.onclick = () => toggleTaskDone(label, index);
+            if (task.done) {
+                taskElement.style.textDecoration = "line-through";
+            }
+            listElement.appendChild(taskElement);
+        });
+        container.appendChild(listElement);
+    })
 
-    labels.forEach(label => {
-        const labelElement = document.createElement("li");
-        labelElement.textContent = label.label;
-        labelListElement.appendChild(labelElement);
-    });
-}
 
 function toggleTaskDone(index) {
     const tasks = getTasks();
-    tasks[index].done = !tasks[index].done;
+    tasks[laneñ][index].done = !tasks[label][index].done;
     saveTasks(tasks);
-    renderTasks(tasks);
+    renderTasks();
 }
 
-function loadTasksAndLabels() {
-    const tasks = getTasks();
-    const labels = getLabels();
-    renderTasks(tasks);
-    renderLabels(labels);
+function loadTasks() {
+    renderTasks();
 }
