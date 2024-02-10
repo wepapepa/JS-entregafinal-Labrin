@@ -14,7 +14,7 @@ function addTask() {
         return; // Abandonar la función si está vacío
     }
 
-    tasks.push({ content: taskInput.value, done: false, label: labelSelect.value });
+ tasks.push({ content: taskInput.value, done: false, label: labelSelect.value });
 
     saveTasks(tasks);
     renderTasksByLabel(labelSelect.value);
@@ -51,14 +51,14 @@ function renderTasks(tasks, label) {
     });
 }
 
-function toggleTaskDone(clickedTaskContent) {
+function toggleTaskDone(taskToToggle) {
     const tasks = getTasks();
-    const taskIndex = tasks.findIndex(task => task.content === clickedTaskContent);
+    const taskIndex = tasks.findIndex(task => task.content === taskToToggle.content && task.label === taskToToggle.label);
     if (taskIndex !== -1) {
         tasks[taskIndex].done = !tasks[taskIndex].done;
-        saveTasks(tasks);
-        loadTasksAndLabels(); // Recargar todas las tareas para reflejar el cambio
     }
+    saveTasks(tasks);
+    renderTasksByLabel(taskToToggle.label);
 }
 
 function loadTasksAndLabels() {
