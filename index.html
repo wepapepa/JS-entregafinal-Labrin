@@ -18,24 +18,34 @@
             <option value="alto">Urgente</option>
             <option value="medio">Importante</option>
             <option value="bajo">Baja urgencia</option>
-          </select>
+        </select>
 
         <button onclick="addTask()">Añadir</button>
     </div>
-    <div class="container">
-        <h2>¡Esto es Urgente!</h2>
-        <ul id="altoList"></ul>
+
+    <div class="container-row">
+        <div class="container">
+            <h2>¡Esto es Urgente!</h2>
+            <ul id="altoList"></ul>
+        </div>
+
+        <div class="container">
+            <h2>¡Esto es Importante!</h2>
+            <ul id="medioList"></ul>
+        </div>
+
+        <div class="container">
+            <h2>¡Esto es de Baja Urgencia!</h2>
+            <ul id="bajoList"></ul>
+        </div>
     </div>
 
-    <div class="container">
-        <h2>¡Esto es Importante!</h2>
-        <ul id="medioList"></ul>
+    <div class="container-advice">
+        <h2>Consejo del día</h2>
+        <p id="dailyAdvice">Cargando consejo...</p>
     </div>
+ 
 
-    <div class="container">
-        <h2>¡Esto es de Baja Urgencia!</h2>
-        <ul id="bajoList"></ul>
-    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="./main.js"></script>

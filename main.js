@@ -2,6 +2,7 @@
 
 document.addEventListener("DOMContentLoaded", () => {
     loadTasksAndLabels();
+    loadDailyAdvice();
 });
 
 function addTask() {
@@ -77,4 +78,17 @@ function getLabels() {
     const storedTasks = sessionStorage.getItem("tasks");
     const tasks = storedTasks ? JSON.parse(storedTasks) : [];
     return tasks.map(task => task.label).filter((label, index, self) => self.indexOf(label) === index);
+}
+
+function loadDailyAdvice() { //API ADVICESLIP
+    fetch('https://api.adviceslip.com/advice')
+        .then(response => response.json())
+        .then(data => {
+
+            document.getElementById("dailyAdvice").textContent = data.slip.advice;
+        })
+        .catch(error => {
+            console.error('Error al cargar el consejo del día:', error);
+            document.getElementById("dailyAdvice").textContent = "No se pudo cargar el consejo del día.";
+        });
 }
